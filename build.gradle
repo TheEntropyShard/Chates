@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.gradleup.shadow' version '8.3.3'
+}
+
+group = 'me.theentropyshard'
+version = '1.0-SNAPSHOT'
+
+def theMainClass = 'me.theentropyshard.chates.Main'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    flatlaf = "3.5.2"
+    flat_fonts_roboto = "2.137"
+    miglayout = "5.3"
+    okhttp = "4.12.0"
+    retrofit = "2.11.0"
+}
+
+dependencies {
+    implementation "com.formdev:flatlaf:$flatlaf"
+    implementation "com.formdev:flatlaf-extras:$flatlaf"
+    implementation "com.formdev:flatlaf-fonts-roboto:$flat_fonts_roboto"
+    implementation "com.miglayout:miglayout-swing:$miglayout"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+}
+
+application {
+    mainClass = theMainClass
+}
+
+run {
+    standardInput = System.in
+}
