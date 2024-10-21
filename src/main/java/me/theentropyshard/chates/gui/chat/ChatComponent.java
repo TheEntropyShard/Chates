@@ -18,10 +18,36 @@
 
 package me.theentropyshard.chates.gui.chat;
 
+import me.theentropyshard.chates.gui.FlatSmoothScrollPaneUI;
+import me.theentropyshard.chates.gui.message.MessageComponent;
+import me.theentropyshard.chates.gui.message.MessageSide;
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
-public class ChatComponent extends JPanel {
+public class ChatComponent extends JScrollPane {
+    private final JPanel messagesPanel;
+
     public ChatComponent() {
+        this.messagesPanel = new JPanel();
+        this.messagesPanel.setLayout(new MigLayout("insets 0, flowy, nogrid", "grow"));
+        this.messagesPanel.setBorder(new EmptyBorder(8, 8, 8,8));
 
+        JPanel borderPanel = new JPanel(new BorderLayout());
+        borderPanel.add(this.messagesPanel, BorderLayout.PAGE_START);
+
+        this.messagesPanel.add(new MessageComponent("Короче пилим тут клиент для матрикца", MessageSide.LEFT), "growx");
+        this.messagesPanel.add(new MessageComponent("Вот, пока сделал только этот view", MessageSide.LEFT), "growx");
+        this.messagesPanel.add(new MessageComponent("Надо сделать базовый чат и сделать отправления сообщений,\n" +
+            "а потом еще и получение, но это уже не так просто,\n" +
+            "как я посмотрел", MessageSide.RIGHT), "growx");
+        this.messagesPanel.add(new MessageComponent("Вот, пока так)", MessageSide.RIGHT), "growx");
+        this.messagesPanel.add(new MessageComponent("Не знаю, что получится", MessageSide.RIGHT), "growx");
+
+        this.setViewportView(borderPanel);
+
+        this.setUI(new FlatSmoothScrollPaneUI());
     }
 }

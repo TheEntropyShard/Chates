@@ -19,13 +19,10 @@
 package me.theentropyshard.chates.gui;
 
 import com.formdev.flatlaf.FlatLaf;
+import me.theentropyshard.chates.gui.chat.ChatView;
 import me.theentropyshard.chates.gui.laf.LightChatesLaf;
-import me.theentropyshard.chates.gui.message.MessageComponent;
-import me.theentropyshard.chates.gui.message.MessageSide;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class TestGui {
@@ -37,22 +34,10 @@ public class TestGui {
 
         JFrame frame = new JFrame("Chates");
 
-        JPanel testPanel = new JPanel(new MigLayout("insets 0, flowy, nogrid", "grow"));
-        testPanel.setBorder(new EmptyBorder(8, 8, 8,8));
-        JPanel borderPanel = new JPanel(new BorderLayout());
-        borderPanel.add(testPanel, BorderLayout.PAGE_START);
+        ChatView chatView = new ChatView();
+        chatView.setPreferredSize(new Dimension(1280, 720));
 
-        testPanel.add(new MessageComponent("Короче пилим тут клиент для матрикца", MessageSide.LEFT), "growx");
-        testPanel.add(new MessageComponent("Вот, пока сделал только этот view", MessageSide.LEFT), "growx");
-        testPanel.add(new MessageComponent("Надо сделать базовый чат и сделать отправления сообщений,\n" +
-            "а потом еще и получение, но это уже не так просто,\n" +
-            "как я посмотрел", MessageSide.RIGHT), "growx");
-        testPanel.add(new MessageComponent("Вот, пока так)", MessageSide.RIGHT), "growx");
-        testPanel.add(new MessageComponent("Не знаю, что получится", MessageSide.RIGHT), "growx");
-
-        JScrollPane modCardsScrollPane = new JScrollPane(borderPanel);
-        modCardsScrollPane.setPreferredSize(new Dimension(1280, 720));
-        frame.add(modCardsScrollPane, BorderLayout.CENTER);
+        frame.add(chatView, BorderLayout.CENTER);
         frame.pack();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

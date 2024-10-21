@@ -16,26 +16,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.theentropyshard.chates.gui.chat;
+package me.theentropyshard.chates.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import com.formdev.flatlaf.ui.FlatScrollPaneUI;
 
-public class ChatView extends JPanel {
-    private final ChatHeader chatHeader;
-    private final ChatComponent chatComponent;
-    private final ChatInput chatInput;
+import java.awt.event.MouseWheelListener;
 
-    public ChatView() {
-        super(new BorderLayout());
+public class FlatSmoothScrollPaneUI extends FlatScrollPaneUI {
+    public FlatSmoothScrollPaneUI() {
 
-        this.chatHeader = new ChatHeader("Chat", 10);
-        this.add(this.chatHeader, BorderLayout.NORTH);
+    }
 
-        this.chatComponent = new ChatComponent();
-        this.add(this.chatComponent, BorderLayout.CENTER);
-
-        this.chatInput = new ChatInput();
-        this.add(this.chatInput, BorderLayout.SOUTH);
+    @Override
+    protected MouseWheelListener createMouseWheelListener() {
+        if (this.isSmoothScrollingEnabled()) {
+            return new SmoothScrollMouseWheelListener(this.scrollpane.getVerticalScrollBar());
+        } else {
+            return super.createMouseWheelListener();
+        }
     }
 }

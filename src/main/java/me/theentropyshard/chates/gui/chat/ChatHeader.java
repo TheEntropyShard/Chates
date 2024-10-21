@@ -18,24 +18,18 @@
 
 package me.theentropyshard.chates.gui.chat;
 
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
-import java.awt.*;
 
-public class ChatView extends JPanel {
-    private final ChatHeader chatHeader;
-    private final ChatComponent chatComponent;
-    private final ChatInput chatInput;
+public class ChatHeader extends JPanel {
+    public ChatHeader(String chatName, int members) {
+        super(new MigLayout("wrap", "[]push", "[center][center]"));
 
-    public ChatView() {
-        super(new BorderLayout());
+        JLabel chatNameLabel = new JLabel(chatName);
+        this.add(chatNameLabel);
 
-        this.chatHeader = new ChatHeader("Chat", 10);
-        this.add(this.chatHeader, BorderLayout.NORTH);
-
-        this.chatComponent = new ChatComponent();
-        this.add(this.chatComponent, BorderLayout.CENTER);
-
-        this.chatInput = new ChatInput();
-        this.add(this.chatInput, BorderLayout.SOUTH);
+        JLabel membersLabel = new JLabel(members + " members");
+        this.add(membersLabel);
     }
 }
