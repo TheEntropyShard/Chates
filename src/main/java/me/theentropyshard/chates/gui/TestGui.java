@@ -20,7 +20,7 @@ package me.theentropyshard.chates.gui;
 
 import com.formdev.flatlaf.FlatLaf;
 import me.theentropyshard.chates.gui.chat.ChatView;
-import me.theentropyshard.chates.gui.laf.LightChatesLaf;
+import me.theentropyshard.chates.gui.laf.DarkChatesLaf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class TestGui {
         FlatLaf.registerCustomDefaultsSource("themes");
         JDialog.setDefaultLookAndFeelDecorated(true);
         JFrame.setDefaultLookAndFeelDecorated(true);
-        LightChatesLaf.setup();
+        DarkChatesLaf.setup();
 
         JFrame frame = new JFrame("Chates");
 

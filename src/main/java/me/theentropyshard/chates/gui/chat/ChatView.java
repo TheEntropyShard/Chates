@@ -35,7 +35,7 @@ public class ChatView extends JPanel {
         this.chatComponent = new ChatComponent();
         this.add(this.chatComponent, BorderLayout.CENTER);
 
-        this.chatInput = new ChatInput();
+        this.chatInput = new ChatInput(this.chatComponent);
         this.add(this.chatInput, BorderLayout.SOUTH);
     }
 }

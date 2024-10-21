@@ -28,6 +28,8 @@ public class MessageComponent extends JPanel {
     public static final Color RIGHT_COLOR = Color.decode("#2b5278");
 
     public MessageComponent(String text, MessageSide side) {
+        this.setOpaque(false);
+
         if (side == MessageSide.LEFT) {
             this.setLayout(new MigLayout("insets 0", "[]push", "[]"));
         } else if (side == MessageSide.RIGHT) {

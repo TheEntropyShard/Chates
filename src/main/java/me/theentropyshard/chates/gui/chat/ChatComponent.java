@@ -21,24 +21,31 @@ package me.theentropyshard.chates.gui.chat;
 import me.theentropyshard.chates.gui.FlatSmoothScrollPaneUI;
 import me.theentropyshard.chates.gui.message.MessageComponent;
 import me.theentropyshard.chates.gui.message.MessageSide;
+import me.theentropyshard.chates.utils.SwingUtils;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class ChatComponent extends JScrollPane {
+    private static final BufferedImage WALLPAPER = SwingUtils.getImage("/wallpapers/wallpaper.jpg");
+
     private final JPanel messagesPanel;
 
     public ChatComponent() {
         this.messagesPanel = new JPanel();
+        this.messagesPanel.setOpaque(false);
         this.messagesPanel.setLayout(new MigLayout("insets 0, flowy, nogrid", "grow"));
         this.messagesPanel.setBorder(new EmptyBorder(8, 8, 8,8));
 
         JPanel borderPanel = new JPanel(new BorderLayout());
+        borderPanel.setOpaque(false);
         borderPanel.add(this.messagesPanel, BorderLayout.PAGE_START);
 
-        this.messagesPanel.add(new MessageComponent("Короче пилим тут клиент для матрикца", MessageSide.LEFT), "growx");
+        this.messagesPanel.add(new MessageComponent("Короче пилим тут клиент", MessageSide.LEFT), "growx");
         this.messagesPanel.add(new MessageComponent("Вот, пока сделал только этот view", MessageSide.LEFT), "growx");
         this.messagesPanel.add(new MessageComponent("Надо сделать базовый чат и сделать отправления сообщений,\n" +
             "а потом еще и получение, но это уже не так просто,\n" +
@@ -47,7 +54,38 @@ public class ChatComponent extends JScrollPane {
         this.messagesPanel.add(new MessageComponent("Не знаю, что получится", MessageSide.RIGHT), "growx");
 
         this.setViewportView(borderPanel);
+        this.getViewport().setOpaque(false);
+        this.setOpaque(false);
 
         this.setUI(new FlatSmoothScrollPaneUI());
+    }
+
+    @Override
+    protected void paintChildren(Graphics g) {
+        Graphics graphics = g.create();
+        graphics.drawImage(
+            ChatComponent.WALLPAPER, 0, 0,
+            this.getParent().getParent().getParent().getWidth(),
+            this.getParent().getParent().getParent().getHeight(),
+            null
+        );
+        graphics.dispose();
+
+        super.paintChildren(g);
+    }
+
+    public void scrollDown() {
+        JScrollBar scrollBar = this.getVerticalScrollBar();
+        scrollBar.setValue(scrollBar.getMaximum());
+    }
+
+    public void addMessageLast(MessageComponent component) {
+        this.messagesPanel.add(component, "growx");
+    }
+
+    public void addMessageToRandomSide(String text) {
+        MessageSide side = new Random().nextBoolean() ? MessageSide.LEFT : MessageSide.RIGHT;
+
+        this.addMessageLast(new MessageComponent(text, side));
     }
 }
