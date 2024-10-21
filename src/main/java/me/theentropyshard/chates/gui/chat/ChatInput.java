@@ -37,38 +37,14 @@ public class ChatInput extends JPanel {
         document.addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                /*int length = document.getLength();
-                String text = null;
-                try {
-                    text = document.getText(length - 1, 1);
-                } catch (BadLocationException ex) {
-                    throw new RuntimeException(ex);
-                }
-                System.out.println(text.replace("\n", "\\n"));
-                if (text.equals("\n")) {
-                    ChatInput.adjustInputHeight(ChatInput.this.messageInputArea, ChatInput.this);
-                }*/
-
-                if (messageInputArea.getLineCount() <= 10) {
+                if (ChatInput.this.messageInputArea.getLineCount() <= 10) {
                     ChatInput.adjustInputHeight(ChatInput.this.messageInputArea, ChatInput.this);
                 }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                /*int length = document.getLength();
-                String text = null;
-                try {
-                    text = document.getText(length - 1, 1);
-                } catch (BadLocationException ex) {
-                    throw new RuntimeException(ex);
-                }
-                System.out.println(text.replace("\n", "\\n"));
-                if (text.equals("\n")) {
-                    ChatInput.adjustInputHeight(ChatInput.this.messageInputArea, ChatInput.this);
-                }*/
-
-                if (messageInputArea.getLineCount() <= 10) {
+                if (ChatInput.this.messageInputArea.getLineCount() <= 10) {
                     ChatInput.adjustInputHeight(ChatInput.this.messageInputArea, ChatInput.this);
                 }
             }
@@ -105,11 +81,6 @@ public class ChatInput extends JPanel {
     private static void adjustInputHeight(JTextArea textArea, Component component) {
         // Calculate the preferred size based on the number of lines
         int lineCount = textArea.getLineCount();
-
-        /*if (lineCount > 10 && textArea.getText().trim().isEmpty()) {
-            return;
-        }*/
-
         int lineHeight = textArea.getFontMetrics(textArea.getFont()).getHeight();
         int newHeight = lineCount * lineHeight;
 
