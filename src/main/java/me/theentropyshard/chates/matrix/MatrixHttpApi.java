@@ -45,6 +45,18 @@ public interface MatrixHttpApi {
         @Header("Authorization") String accessToken
     );
 
+    @GET("_matrix/client/v3/sync")
+    Call<JsonObject> initialSync(
+        @Query("timeout") int timeout, @Header("Authorization") String accessToken
+    );
+
+    @GET("_matrix/client/v3/sync")
+    Call<JsonObject> sync(
+        @Query("timeout") int timeout,
+        @Query("since") String since,
+        @Header("Authorization") String accessToken
+    );
+
     @POST("_matrix/client/v3/logout")
     Call<Object> logout(
         @Header("Authorization") String accessToken

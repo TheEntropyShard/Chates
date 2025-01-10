@@ -30,13 +30,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
-        //apiTest();
-        new TestGui();
+        apiTest();
+        //new TestGui();
     }
 
     static String ROOM_ID = System.getenv("MATRIX_ROOM");
@@ -83,6 +84,44 @@ public class Main {
                     responseBody.getErrorCode() + " " + responseBody.getError() :
                     messageResponseBody.getEventId()
             );*/
+
+            String at = accessToken;
+            Thread thread = new Thread(() -> {
+                try {
+                    String next_batch = "";
+                    Response<JsonObject> initialResp = matrixHttpApi.initialSync(30000, "Bearer " + at).execute();
+                    //System.out.println(initialResp.code());
+                    JsonObject body = initialResp.body();
+                    System.out.println("initial sync: " + body);
+
+                    next_batch = body.get("next_batch").getAsString();
+
+                    while (true) {
+                        try {
+                            Response<JsonObject> syncResp = matrixHttpApi.sync(30000, next_batch, "Bearer " + at).execute();
+                            System.out.println(syncResp.code());
+                            JsonObject syncBody = syncResp.body();
+                            System.out.println(syncBody);
+                            next_batch = syncBody.get("next_batch").getAsString();
+
+                            System.out.println(next_batch);
+
+                            System.out.println("sync: " + body);
+                        } catch (SocketTimeoutException timeoutException) {
+
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.setDaemon(true);
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             Scanner scanner = new Scanner(System.in);
             while (true) {
